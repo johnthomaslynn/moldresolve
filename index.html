@@ -356,6 +356,15 @@
       box-shadow:0 14px 32px rgba(13,59,110,.28);
       background:linear-gradient(180deg,var(--navy-mid),var(--navy));
     }
+    /* Green override for result step call button */
+    #result .cta-btn {
+      background:linear-gradient(180deg,#22a06b,#1a7a52);
+      box-shadow:0 10px 28px rgba(26,128,85,.28);
+    }
+    #result .cta-btn:hover {
+      background:linear-gradient(180deg,#27b878,#1a8055);
+      box-shadow:0 14px 32px rgba(26,128,85,.36);
+    }
     .cta-sub { font-size:var(--text-xs); font-weight:500; opacity:.88; display:block; margin-top:4px; }
     .cta-note { font-size:var(--text-xs); color:var(--text-muted); text-align:center; margin-bottom:22px; }
 
@@ -507,6 +516,106 @@
       .sci-grid { grid-template-columns:1fr; }
     }
 
+
+    /* ── ZIP CAPTURE STEP (post-quiz, before result) ── */
+    .zip-capture-step { display:none; }
+    .zip-capture-step.active { display:block; }
+
+    .zip-capture-wrap { padding: 28px 26px 32px; }
+
+    .complete-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #1a8055, #22a06b);
+      color: #fff;
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: var(--text-xs);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      margin-bottom: 6px;
+      box-shadow: 0 4px 14px rgba(26,128,85,0.30);
+    }
+    .complete-badge .check-anim {
+      width: 20px; height: 20px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .8rem;
+      font-weight: 900;
+    }
+
+    .zip-capture-congrats {
+      font-size: var(--text-lg);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .zip-capture-sub {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      margin-bottom: 22px;
+      line-height: 1.6;
+    }
+
+    .zip-capture-row {
+      display: flex;
+      gap: 0;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: 0 4px 18px rgba(13,59,110,0.13);
+    }
+    .zip-capture-input {
+      flex: 1;
+      padding: 17px 18px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      font-family: inherit;
+      border: 1.5px solid var(--divider);
+      border-right: none;
+      border-radius: var(--radius-md) 0 0 var(--radius-md);
+      outline: none;
+      color: var(--text);
+      background: var(--bg);
+      min-width: 0;
+      letter-spacing: .1em;
+    }
+    .zip-capture-input:focus { border-color: #22a06b; }
+    .zip-capture-input::placeholder { color: #aac0d0; font-weight: 500; letter-spacing: 0; }
+    .zip-capture-btn {
+      padding: 17px 22px;
+      background: linear-gradient(180deg, #22a06b, #1a7a52);
+      color: #fff;
+      font-size: .95rem;
+      font-weight: 800;
+      font-family: inherit;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      transition: background var(--trans);
+      flex-shrink: 0;
+    }
+    .zip-capture-btn:hover { background: linear-gradient(180deg, #27b878, #1a8055); }
+
+
+    @media (max-width: 480px) {
+      .zip-capture-row { flex-direction: column; }
+      .zip-capture-input {
+        border-right: 1.5px solid var(--divider);
+        border-bottom: none;
+        border-radius: var(--radius-md) var(--radius-md) 0 0;
+      }
+      .zip-capture-btn {
+        padding: 15px 16px;
+        text-align: center;
+        border-radius: 0 0 var(--radius-md) var(--radius-md);
+      }
+    }
+
   </style>
 
 </head>
@@ -542,8 +651,8 @@
     <h1>Mold in Your Home? Find Out How Serious It Is — and What It Costs to Fix</h1>
     <p class="hero-sub">Answer 3 quick questions. Understand exactly what you're dealing with and what it typically costs to fix.</p>
     <button class="hero-cta-btn" onclick="openQuiz()">
-            Start Free Mold Assessment
- <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      Start Free Mold Assessment
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
     </button>
   </div>
 </header>
@@ -623,29 +732,60 @@
         <p class="step-q">How soon do you need this handled?</p>
         <p class="step-hint">We reserve same-day slots for urgent cases — limited per ZIP code.</p>
         <div class="opts">
-          <button class="opt" onclick="showResult()">
+          <button class="opt" onclick="showZipCapture()">
             <span class="opt-icon">🚨</span>
             <span><span class="opt-label">As soon as possible / today</span><span class="opt-desc">Health concern or visible spread — we prioritize these</span></span>
           </button>
-          <button class="opt" onclick="showResult()">
+          <button class="opt" onclick="showZipCapture()">
             <span class="opt-icon">📅</span>
             <span><span class="opt-label">This week</span><span class="opt-desc">Soon but not an emergency</span></span>
           </button>
-          <button class="opt" onclick="showResult()">
+          <button class="opt" onclick="showZipCapture()">
             <span class="opt-icon">🗓️</span>
             <span><span class="opt-label">Within the next 2–4 weeks</span><span class="opt-desc">Planning ahead for remediation</span></span>
           </button>
-          <button class="opt" onclick="showResult()">
+          <button class="opt" onclick="showZipCapture()">
             <span class="opt-icon">💡</span>
             <span><span class="opt-label">Just getting information for now</span><span class="opt-desc">We can still help — free call, no commitment</span></span>
           </button>
         </div>
       </div>
 
+
+      <!-- ZIP CAPTURE STEP (post-quiz) -->
+      <div class="zip-capture-step" id="s-zip">
+        <div class="zip-capture-wrap">
+          <div class="complete-badge">
+            <span class="check-anim">✓</span>
+            Assessment Complete ✓
+          </div>
+          <p class="zip-capture-congrats">Your answers are in. Now let's build your estimate.</p>
+          <p class="zip-capture-sub">Enter your ZIP code so we can calculate remediation costs specific to your area — labor rates, material costs, and local specialist pricing all vary by location.</p>
+          <form onsubmit="submitZipCapture(event)">
+            <div class="zip-capture-row">
+              <input
+                type="text"
+                id="zip-capture-input"
+                class="zip-capture-input"
+                placeholder="Enter ZIP code"
+                maxlength="5"
+                pattern="[0-9]{5}"
+                inputmode="numeric"
+                autocomplete="postal-code"
+                aria-label="Your ZIP code"
+                required
+              />
+              <button type="submit" class="zip-capture-btn">See My Results →</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+
       <!-- RESULT -->
       <div class="result-step" id="result" style="padding:26px 26px 30px;">
-        <div class="result-badge">✅ Price Estimate Ready</div>
-        <p class="result-h">A specialist is on the line for your area — right now.</p>
+        <div class="result-badge">✅ Assessment Complete — Results Ready</div>
+        <p class="result-h">Based on your answers, a licensed specialist in your area can give you a real price range in the next 2 minutes — specific to your situation, not a generic estimate.</p>
         <a class="cta-btn" href="tel:+18332464467">
           📞 Call Now — It's Free
           <span class="cta-sub">2–3 minutes &nbsp;·&nbsp; No obligation &nbsp;·&nbsp; No work without your approval.</span>
@@ -782,7 +922,7 @@
 
   function openQuiz() {
     quizCard.style.display = 'block';
-    document.querySelectorAll('.step, .result-step').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.step, .result-step, .zip-capture-step').forEach(el => el.classList.remove('active'));
     document.getElementById('s1').classList.add('active');
     document.getElementById('prog-fill').style.width = '33%';
     document.getElementById('prog-label').textContent = 'Step 1 of 3';
@@ -810,14 +950,30 @@
   }
 
   function go(n) {
-    document.querySelectorAll('.step, .result-step').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.step, .result-step, .zip-capture-step').forEach(el => el.classList.remove('active'));
     document.getElementById('s' + n).classList.add('active');
     setProgress(n);
     scrollToCard();
   }
 
+  function showZipCapture() {
+    document.querySelectorAll('.step, .result-step, .zip-capture-step').forEach(el => el.classList.remove('active'));
+    document.getElementById('s-zip').classList.add('active');
+    setProgress('done');
+    scrollToCard();
+    setTimeout(function() {
+      var inp = document.getElementById('zip-capture-input');
+      if (inp) inp.focus();
+    }, 350);
+  }
+
+  function submitZipCapture(e) {
+    e.preventDefault();
+    showResult();
+  }
+
   function showResult() {
-    document.querySelectorAll('.step, .result-step').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.step, .result-step, .zip-capture-step').forEach(el => el.classList.remove('active'));
     document.getElementById('result').classList.add('active');
     setProgress('done');
     scrollToCard();
