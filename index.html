@@ -3,6 +3,7 @@
 <head>
 
 
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JBPWL5TNN5"></script>
 <script>
@@ -19,6 +20,14 @@
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "x40x7tpaho");
 </script>
+
+
+
+
+
+
+
+
 
 
     <meta charset="UTF-8" />
@@ -573,11 +582,10 @@
             margin-bottom: 16px;
         }
         .result-price-box .range-label {
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
             color: var(--navy);
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
+            letter-spacing: 0.3px;
             margin-bottom: 2px;
         }
         .result-price-box .price-range {
@@ -620,7 +628,7 @@
             font-weight: 500;
             color: var(--text);
             line-height: 1.6;
-            margin-bottom: 18px;
+            margin-bottom: 6px;
             padding: 0 4px;
         }
         .call-cta .highlight {
@@ -638,6 +646,12 @@
             padding: 2px 8px;
             border-radius: 6px;
             display: inline-block;
+        }
+        .call-cta-sub {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 18px;
         }
 
         .call-btn-green {
@@ -673,6 +687,37 @@
             50% {
                 box-shadow: 0 0 0 12px rgba(26, 128, 85, 0.08);
             }
+        }
+
+        /* trust badges under button */
+        .trust-badges {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: var(--blue-50);
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+            border: 1px solid var(--border);
+            line-height: 1.5;
+            margin-top: 10px;
+        }
+        .trust-badges .badge-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px 20px;
+            margin-bottom: 6px;
+        }
+        .trust-badges .badge-row span {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+        .trust-badges .trust-text {
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--text-muted);
         }
 
         /* ── footer (minimized) ── */
@@ -822,6 +867,10 @@
             .call-cta {
                 font-size: 15px;
             }
+            .trust-badges {
+                font-size: 12px;
+                padding: 10px 12px;
+            }
         }
         @media (max-width: 400px) {
             .qo-inner {
@@ -845,6 +894,10 @@
             }
             .call-cta {
                 font-size: 14px;
+            }
+            .trust-badges {
+                font-size: 11px;
+                padding: 8px 10px;
             }
         }
     </style>
@@ -997,7 +1050,7 @@
                     <div class="result-headline">Here's What Mold Remediation <br>Typically Costs in Your Situation</div>
 
                     <div class="result-price-box">
-                        <div class="range-label">Most likely range</div>
+                        <div class="range-label">Most situations like yours fall between</div>
                         <div class="price-range"><span class="dollar">$</span><span id="resultLow">0</span> – <span class="dollar">$</span><span id="resultHigh">0</span></div>
                     </div>
 
@@ -1011,15 +1064,30 @@
                         <div class="br-row" style="border-top:2px solid var(--border);padding-top:6px;margin-top:4px;font-weight:700;"><span>🧮 Calculated range</span> <strong id="brRange">—</strong></div>
                     </div>
 
-                    <!-- Emphasized CTA text -->
+                    <!-- Emphasized CTA text + sub -->
                     <div class="call-cta">
                         A licensed specialist will tell you if your actual cost is higher, lower —
                         <span class="highlight-self">or whether you can handle part of this yourself.</span>
+                    </div>
+                    <div class="call-cta-sub">
+                        Your estimate range narrows to an exact number on the call. Takes 2–3 minutes.
                     </div>
 
                     <a href="tel:+18332464467" class="call-btn-green">
                         📞 Call Now — <span class="result-phone" style="display:inline;font-size:inherit;color:inherit;">1-833-246-4467</span>
                     </a>
+
+                    <!-- trust badges -->
+                    <div class="trust-badges">
+                        <div class="badge-row">
+                            <span>⭐ AVAILABLE NOW</span>
+                            <span>📋 LICENSED SPECIALISTS</span>
+                            <span>🔒 NO OBLIGATION</span>
+                        </div>
+                        <div class="trust-text">
+                            No work begins without your written approval. The call connects you with a local, licensed mold specialist who gives you honest answers and a firm price.
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
