@@ -1,803 +1,1293 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mold Removal Calculator — Free Quote</title>
+    <meta name="description" content="Get an instant mold removal cost estimate. Answer 5 quick questions. Free, no obligation." />
+    <style>
+        /* ── reset & base ── */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        :root {
+            --navy: #0d3b6e;
+            --navy-dark: #082a50;
+            --navy-mid: #154f8e;
+            --blue: #1a7ab5;
+            --blue-light: #3baee0;
+            --blue-50: #eaf6fd;
+            --blue-100: #d0ecf9;
+            --text: #0d2137;
+            --text-muted: #4d6577;
+            --text-faint: #8fa3b1;
+            --white: #ffffff;
+            --bg: #f4f9fd;
+            --divider: #daeaf5;
+            --border: rgba(13, 59, 110, 0.11);
+            --success: #1a8055;
+            --shadow-sm: 0 2px 8px rgba(13, 59, 110, 0.06);
+            --shadow-md: 0 8px 32px rgba(13, 59, 110, 0.10);
+            --shadow-lg: 0 16px 56px rgba(13, 59, 110, 0.14);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --transition: 0.25s ease;
+            --phone: #1a8055;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            overflow-x: hidden;
+            padding-bottom: 70px;
+            -webkit-font-smoothing: antialiased;
+        }
 
+        /* ── floating call bar ── */
+        .floating-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 9000;
+            background: var(--white);
+            border-top: 1px solid var(--divider);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 16px;
+            gap: 12px;
+            box-shadow: 0 -4px 20px rgba(13, 59, 110, 0.08);
+        }
+        .floating-bar .fb-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            min-width: 0;
+        }
+        .floating-bar .fb-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+            animation: pulse-ring 2.4s infinite;
+            color: #fff;
+        }
+        @keyframes pulse-ring {
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(26, 122, 181, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(26, 122, 181, 0.08);
+            }
+        }
+        .floating-bar .fb-text strong {
+            display: block;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            color: var(--text-faint);
+        }
+        .floating-bar .fb-text span {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .floating-bar .fb-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--phone);
+            color: #fff;
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            padding: 11px 18px;
+            font-size: 14px;
+            font-weight: 800;
+            white-space: nowrap;
+            transition: background var(--transition), transform 0.15s;
+            flex-shrink: 0;
+        }
+        .floating-bar .fb-btn:hover {
+            background: #146d47;
+            transform: translateY(-1px);
+        }
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-JBPWL5TNN5"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-JBPWL5TNN5');
-</script>
+        /* ── header ── */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 900;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--divider);
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .site-header .brand {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--text);
+            letter-spacing: -0.3px;
+        }
+        .site-header .brand span {
+            color: var(--blue);
+        }
+        .site-header .badge {
+            font-size: 11px;
+            background: var(--blue-50);
+            color: var(--navy);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border: 1px solid var(--border);
+        }
+        .site-header .badge::before {
+            content: '';
+            width: 7px;
+            height: 7px;
+            background: var(--success);
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse-dot 1.2s infinite;
+        }
+        @keyframes pulse-dot {
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.4;
+                transform: scale(0.7);
+            }
+        }
 
+        /* ── container ── */
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-<script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "x40x7tpaho");
-</script>
+        /* ── hero ── */
+        .hero {
+            padding: 28px 20px 16px;
+            text-align: center;
+            background: var(--white);
+            border-bottom: 1px solid var(--divider);
+        }
+        .hero .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--blue-50);
+            border: 1px solid var(--border);
+            color: var(--navy);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            padding: 4px 14px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+        }
+        .hero .eyebrow .calc-icon {
+            font-size: 14px;
+        }
+        .hero h1 {
+            font-size: clamp(28px, 7vw, 40px);
+            font-weight: 900;
+            line-height: 1.08;
+            margin-bottom: 6px;
+            letter-spacing: -0.02em;
+            color: var(--text);
+        }
+        .hero h1 em {
+            font-style: normal;
+            color: var(--blue);
+        }
+        .hero .sub {
+            font-size: clamp(15px, 2vw, 18px);
+            color: var(--text-muted);
+            max-width: 460px;
+            margin: 0 auto 6px;
+            line-height: 1.4;
+            font-weight: 450;
+        }
 
+        /* ── calculator card (clean, no footer) ── */
+        .calc-section {
+            padding: 20px 20px 28px;
+            background: var(--bg);
+        }
+        .calc-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 32px 28px 28px;
+            max-width: 560px;
+            margin: 0 auto;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+        .calc-card .calc-icon-big {
+            font-size: 44px;
+            margin-bottom: 4px;
+        }
+        .calc-card .calc-label {
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--blue);
+            margin-bottom: 2px;
+        }
+        .calc-card .calc-title {
+            font-size: clamp(22px, 4.5vw, 28px);
+            font-weight: 900;
+            color: var(--text);
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+        .calc-card .first-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 0;
+        }
+        .calc-card .first-options .qo-opt {
+            background: var(--blue-50);
+            color: var(--text);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 14px 18px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: left;
+            transition: background var(--transition), border-color var(--transition), transform 0.12s;
+            width: 100%;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+        .calc-card .first-options .qo-opt:hover {
+            background: var(--blue-100);
+            border-color: var(--blue);
+            transform: translateY(-1px);
+        }
+        .calc-card .first-options .qo-opt:active {
+            transform: scale(0.98);
+        }
+        .calc-card .first-options .qo-opt .qo-emoji {
+            font-size: 20px;
+        }
+        /* no footer at all */
 
+        /* ── overlay quiz ── */
+        .quiz-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: rgba(13, 33, 55, 0.72);
+            backdrop-filter: blur(8px);
+            overflow-y: auto;
+            padding: 20px;
+            align-items: flex-start;
+            justify-content: center;
+        }
+        .quiz-overlay.active {
+            display: flex;
+        }
+        .qo-inner {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 28px 22px 26px;
+            max-width: 480px;
+            width: 100%;
+            margin: auto;
+            color: var(--text);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+        .qo-progress {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+        .qo-progress span {
+            height: 4px;
+            border-radius: 4px;
+            background: var(--divider);
+            flex: 1;
+            transition: background 0.4s ease;
+        }
+        .qo-progress span.done {
+            background: var(--blue);
+        }
+        .qo-progress-label {
+            font-size: 11px;
+            color: var(--text-faint);
+            font-weight: 600;
+            text-align: right;
+            margin-bottom: 18px;
+        }
+        .qo-step {
+            display: none !important;
+            animation: fadeUp 0.35s ease;
+        }
+        .qo-step.active {
+            display: block !important;
+        }
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
+        /* ── LOADING STEP ── */
+        .loading-wrap {
+            text-align: center;
+            padding: 30px 0 20px;
+        }
+        .loading-wrap .loader-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+        .loading-wrap .loading-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+        .loading-wrap .loading-sub {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 28px;
+        }
+        /* ── progress bar ── */
+        .loading-bar-track {
+            width: 100%;
+            height: 14px;
+            background: var(--blue-100);
+            border-radius: 99px;
+            overflow: hidden;
+            margin: 0 auto 14px;
+        }
+        .loading-bar-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 99px;
+            background: linear-gradient(90deg, #1a7ab5 0%, #3baee0 50%, #0d3b6e 100%);
+            background-size: 200% 100%;
+            animation: bar-shimmer 1.8s linear infinite;
+            transition: width 0.4s ease;
+        }
+        @keyframes bar-shimmer {
+            0%   { background-position: 200% center; }
+            100% { background-position: -200% center; }
+        }
+        .loading-bar-pct {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--blue);
+            letter-spacing: 0.02em;
+        }
+        40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
 
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>24/7 Mold Removal Hotline | Talk to a Licensed Mold Pro</title>
-<meta name="description" content="Mold in your home? Talk to a licensed mold removal specialist 24/7. Free assessment. No obligation. Get honest answers and a real price estimate now." />
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --orange: #E8820C;
-    --orange-dark: #c46d08;
-    --green: #2ECC71;
-    --green-dark: #27ae60;
-    --dark: #1a1f2e;
-    --dark2: #232836;
-    --dark3: #2c3344;
-    --white: #ffffff;
-    --gray: #8a939f;
-    --red: #e74c3c;
-    --yellow: #f1c40f;
-  }
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background: var(--dark);
-    color: var(--white);
-    line-height: 1.6;
-    overflow-x: hidden;
-    padding-bottom: 72px;
-  }
+        /* ── QUESTION STYLES ── */
+        .qo-icon {
+            font-size: 34px;
+            text-align: center;
+            margin-bottom: 2px;
+        }
+        .qo-label {
+            text-align: center;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: var(--blue);
+            margin-bottom: 6px;
+        }
+        .qo-question {
+            text-align: center;
+            font-size: clamp(17px, 4vw, 21px);
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1.25;
+            margin-bottom: 16px;
+        }
+        .qo-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .qo-opt {
+            background: var(--blue-50);
+            color: var(--text);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 14px 18px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: left;
+            transition: background var(--transition), border-color var(--transition), transform 0.12s;
+            width: 100%;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .qo-opt:hover {
+            background: var(--blue-100);
+            border-color: var(--blue);
+            transform: translateY(-1px);
+        }
+        .qo-opt:active {
+            transform: scale(0.98);
+        }
+        .qo-opt .qo-emoji {
+            font-size: 18px;
+            flex-shrink: 0;
+        }
 
-  /* FLOATING BAR */
-  .floating-bar {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    z-index: 9000;
-    background: #13161f;
-    border-top: 1px solid rgba(255,255,255,0.08);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 16px;
-    gap: 12px;
-  }
-  .floating-bar .fb-label { display: flex; align-items: center; gap: 10px; flex: 1; }
-  .floating-bar .fb-icon {
-    width: 40px; height: 40px; border-radius: 50%;
-    background: var(--orange);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px; flex-shrink: 0;
-    animation: pulse-cta 2.5s infinite;
-  }
-  .floating-bar .fb-text strong { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; color: #8a939f; text-transform: uppercase; }
-  .floating-bar .fb-text span { display: block; font-size: 13px; font-weight: 700; color: var(--white); }
-  .floating-bar .fb-btn {
-    display: inline-flex; align-items: center; gap: 7px;
-    background: var(--orange); color: #fff; text-decoration: none;
-    border-radius: 10px; padding: 12px 18px;
-    font-size: 14px; font-weight: 800; white-space: nowrap;
-    transition: background 0.18s, transform 0.12s;
-  }
-  .floating-bar .fb-btn:hover { background: var(--orange-dark); transform: translateY(-1px); }
+        /* ── RESULT STEP ── */
+        .result-wrap {
+            text-align: center;
+            padding-top: 2px;
+        }
+        .result-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #edf7f3;
+            border: 1.5px solid var(--success);
+            color: var(--success);
+            font-size: 11px;
+            font-weight: 800;
+            padding: 5px 16px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .result-badge::before {
+            content: '✓';
+            font-size: 14px;
+            font-weight: 900;
+            color: var(--success);
+        }
+        .result-headline {
+            font-size: clamp(18px, 4vw, 23px);
+            font-weight: 900;
+            color: var(--text);
+            line-height: 1.2;
+            margin-bottom: 4px;
+        }
+        .result-sub {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            line-height: 1.5;
+        }
+        .result-price-box {
+            background: var(--blue-50);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 18px 18px 16px;
+            margin-bottom: 16px;
+        }
+        .result-price-box .price-label {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--navy);
+            margin-bottom: 4px;
+        }
+        .result-price-box .price-range {
+            font-size: clamp(28px, 6vw, 36px);
+            font-weight: 900;
+            color: var(--text);
+            line-height: 1.1;
+        }
+        .result-price-box .price-range .dollar {
+            color: var(--blue);
+        }
+        .result-price-box .price-note {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            line-height: 1.5;
+        }
+        .result-price-box .price-note strong {
+            color: var(--text);
+        }
+        .result-breakdown {
+            text-align: left;
+            font-size: 12px;
+            color: var(--text-muted);
+            background: var(--white);
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            border: 1px solid var(--divider);
+            margin-bottom: 16px;
+            line-height: 1.7;
+        }
+        .result-breakdown strong {
+            color: var(--text);
+        }
+        .result-breakdown .br-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 2px 0;
+            border-bottom: 1px dashed var(--divider);
+        }
+        .result-breakdown .br-row:last-child {
+            border-bottom: none;
+        }
+        .call-btn-green {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--phone) !important;
+            color: #fff !important;
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            padding: 18px 24px;
+            font-size: 18px;
+            font-weight: 900;
+            letter-spacing: 0.2px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 10px;
+            animation: pulse-green 2.2s infinite;
+            transition: background var(--transition), transform 0.12s;
+            font-family: inherit;
+        }
+        .call-btn-green:hover {
+            background: #146d47 !important;
+            transform: translateY(-2px);
+        }
+        @keyframes pulse-green {
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(26, 128, 85, 0.25);
+            }
+            50% {
+                box-shadow: 0 0 0 12px rgba(26, 128, 85, 0.08);
+            }
+        }
+        .call-reassure {
+            font-size: 12px;
+            color: var(--text-faint);
+            text-align: center;
+            line-height: 1.5;
+        }
+        .call-reassure strong {
+            color: var(--text-muted);
+        }
+        .result-phone {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--phone);
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 2px;
+        }
 
-  /* HEADER */
-  .site-header {
-    position: sticky; top: 0; z-index: 900;
-    background: rgba(26,31,46,0.96);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    padding: 12px 20px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .site-header .brand { font-size: 14px; font-weight: 700; color: var(--white); }
-  .site-header .brand span { color: var(--orange); }
-  .site-header .badge {
-    font-size: 11px; background: var(--green); color: #fff;
-    padding: 4px 10px; border-radius: 20px; font-weight: 700;
-    display: flex; align-items: center; gap: 5px;
-  }
-  .site-header .badge::before {
-    content: ''; width: 7px; height: 7px;
-    background: #fff; border-radius: 50%; display: inline-block;
-    animation: pulse-dot 1.2s infinite;
-  }
+        /* ── footer (minimized) ── */
+        .site-footer {
+            background: var(--white);
+            padding: 16px 20px 12px;
+            border-top: 1px solid var(--divider);
+            text-align: center;
+        }
+        .site-footer p {
+            font-size: 11px;
+            color: var(--text-faint);
+            line-height: 1.6;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+        .site-footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 11px;
+        }
+        .site-footer a:hover {
+            color: var(--navy);
+            text-decoration: underline;
+        }
+        .legal-links {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin: 8px 0 10px;
+        }
+        .legal-box {
+            max-width: 640px;
+            margin: 6px auto 0;
+            padding: 10px 14px;
+            border: 1px solid var(--divider);
+            background: var(--bg);
+            border-radius: var(--radius-sm);
+            text-align: left;
+        }
+        .legal-box strong {
+            color: var(--text);
+            display: block;
+            margin-bottom: 2px;
+            font-size: 10px;
+        }
+        .legal-box p {
+            font-size: 10px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
 
-  @keyframes pulse-dot {
-    0%,100% { opacity:1; transform:scale(1); }
-    50% { opacity:0.4; transform:scale(0.7); }
-  }
-  @keyframes pulse-cta {
-    0%,100% { box-shadow: 0 0 0 0 rgba(232,130,12,0); }
-    50% { box-shadow: 0 0 0 8px rgba(232,130,12,0.2); }
-  }
-  @keyframes pulse-green {
-    0%,100% { box-shadow: 0 0 0 0 rgba(46,204,113,0); }
-    50% { box-shadow: 0 0 0 12px rgba(46,204,113,0.25); }
-  }
+        /* ── modals ── */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(13, 33, 55, 0.7);
+            backdrop-filter: blur(6px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10001;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-box {
+            width: 100%;
+            max-width: 640px;
+            max-height: 85vh;
+            overflow-y: auto;
+            background: var(--white);
+            color: var(--text);
+            border-radius: var(--radius);
+            padding: 28px 24px 24px;
+            box-shadow: var(--shadow-lg);
+        }
+        .modal-close {
+            position: sticky;
+            top: 0;
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 20px;
+            cursor: pointer;
+            transition: background var(--transition);
+        }
+        .modal-close:hover {
+            background: var(--divider);
+        }
+        .modal-box h3 {
+            font-size: 22px;
+            line-height: 1.2;
+            margin-bottom: 12px;
+            font-weight: 900;
+        }
+        .modal-box h4 {
+            font-size: 15px;
+            margin: 16px 0 6px;
+            font-weight: 800;
+            color: var(--text);
+        }
+        .modal-box p,
+        .modal-box li {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.65;
+        }
+        .modal-box ul {
+            padding-left: 20px;
+            margin-top: 4px;
+        }
 
-  section { width: 100%; }
-  .container { max-width: 560px; margin: 0 auto; padding: 0 20px; }
-
-  /* HERO */
-  .hero { background: linear-gradient(160deg, #1a1f2e 0%, #232836 100%); padding: 48px 20px 40px; text-align: center; }
-  .hero .eyebrow {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(232,130,12,0.15); border: 1px solid rgba(232,130,12,0.35);
-    color: var(--orange); font-size: 12px; font-weight: 700;
-    letter-spacing: 1px; text-transform: uppercase;
-    padding: 6px 14px; border-radius: 20px; margin-bottom: 20px;
-  }
-  .hero h1 { font-size: clamp(28px, 7vw, 38px); font-weight: 900; line-height: 1.1; margin-bottom: 16px; letter-spacing: -0.5px; }
-  .hero h1 em { font-style: normal; color: var(--orange); }
-  .hero .sub { font-size: 16px; color: #b0bac6; max-width: 420px; margin: 0 auto 28px; line-height: 1.55; }
-  .hero .trust-row { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 10px; }
-  .hero .trust-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #8a939f; }
-
-  /* INLINE QUIZ CARDS */
-  .quiz-section { padding: 8px 20px 48px; background: var(--dark); }
-  .quiz-card {
-    background: var(--white); color: #1a1f2e;
-    border-radius: 18px; padding: 30px 24px 28px;
-    max-width: 520px; margin: 0 auto;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
-  }
-  .quiz-card .quiz-icon { font-size: 36px; text-align: center; margin-bottom: 6px; }
-  .quiz-card .quiz-label { text-align: center; font-size: 16px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; color: var(--orange); margin-bottom: 14px; }
-  .quiz-card .quiz-question { text-align: center; font-size: clamp(18px, 4.5vw, 22px); font-weight: 800; color: #1a1f2e; margin-bottom: 22px; line-height: 1.25; }
-  .quiz-options { display: flex; flex-direction: column; gap: 12px; }
-  .quiz-opt {
-    background: var(--orange); color: var(--white); border: none;
-    border-radius: 10px; padding: 16px 20px; font-size: 16px; font-weight: 700;
-    cursor: pointer; text-align: left;
-    transition: background 0.18s, transform 0.12s;
-    width: 100%; display: block;
-  }
-  .quiz-opt:hover { background: var(--orange-dark); transform: translateY(-1px); }
-  .quiz-opt:active { transform: scale(0.98); }
-  .quiz-footer { text-align: center; margin-top: 18px; font-size: 12px; color: #8a939f; }
-  .quiz-footer .brands {
-    display: flex; justify-content: center; gap: 16px; margin-top: 8px;
-    opacity: 0.6; font-size: 11px; font-weight: 700; color: #555; flex-wrap: wrap;
-  }
-
-  /* POWER SECTIONS */
-  .power-section { padding: 56px 20px; }
-  .power-section.alt { background: var(--dark2); }
-  .power-section .ps-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--orange); text-align: center; margin-bottom: 12px; }
-  .power-section h2 { font-size: clamp(24px, 6vw, 34px); font-weight: 900; text-align: center; line-height: 1.15; margin-bottom: 16px; letter-spacing: -0.3px; }
-  .power-section .ps-sub { text-align: center; font-size: 15px; color: #a0aab5; max-width: 440px; margin: 0 auto 36px; line-height: 1.6; }
-
-  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 480px; margin: 0 auto 36px; }
-  .stat-box { background: var(--dark3); border-radius: 14px; padding: 22px 16px; text-align: center; }
-  .stat-box .num { font-size: 32px; font-weight: 900; color: var(--orange); line-height: 1; margin-bottom: 6px; }
-  .stat-box .lbl { font-size: 13px; color: #8a939f; line-height: 1.4; }
-
-  .checklist { max-width: 480px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
-  .check-item { display: flex; align-items: flex-start; gap: 12px; background: var(--dark3); border-radius: 12px; padding: 16px 18px; }
-  .check-item .ci-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
-  .check-item .ci-text strong { display: block; font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 3px; }
-  .check-item .ci-text span { font-size: 13px; color: #8a939f; line-height: 1.5; }
-
-  .science-card {
-    background: linear-gradient(135deg, #1e2435, #2a3045);
-    border: 1px solid rgba(232,130,12,0.25);
-    border-radius: 16px; padding: 28px 24px;
-    max-width: 480px; margin: 32px auto 0;
-  }
-  .science-card .sc-title { font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--orange); margin-bottom: 12px; }
-  .science-card p { font-size: 14px; color: #a0aab5; line-height: 1.65; }
-  .science-card p strong { color: var(--white); }
-
-  .risk-row { display: flex; flex-direction: column; gap: 12px; max-width: 480px; margin: 0 auto 36px; }
-  .risk-item { display: flex; align-items: flex-start; gap: 12px; padding: 14px 18px; background: rgba(231,76,60,0.08); border: 1px solid rgba(231,76,60,0.18); border-radius: 12px; }
-  .risk-item .ri-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
-  .risk-item .ri-text strong { display: block; font-size: 14px; font-weight: 700; color: #e74c3c; margin-bottom: 3px; }
-  .risk-item .ri-text span { font-size: 13px; color: #8a939f; line-height: 1.45; }
-
-  .source-note { text-align: center; font-size: 11px; color: #555d6b; margin-top: 20px; font-style: italic; }
-
-  .steps { display: flex; flex-direction: column; max-width: 480px; margin: 0 auto; position: relative; }
-  .steps::before { content: ''; position: absolute; left: 26px; top: 30px; bottom: 30px; width: 2px; background: linear-gradient(180deg, var(--orange), transparent); }
-  .step { display: flex; gap: 18px; align-items: flex-start; padding: 0 0 28px; position: relative; }
-  .step:last-child { padding-bottom: 0; }
-  .step .sn { width: 52px; height: 52px; border-radius: 50%; background: var(--orange); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 900; flex-shrink: 0; position: relative; z-index: 1; }
-  .step .st strong { display: block; font-size: 15px; font-weight: 800; margin-bottom: 4px; }
-  .step .st span { font-size: 13px; color: #8a939f; line-height: 1.5; }
-
-  /* QUIZ OVERLAY */
-  .quiz-overlay {
-    display: none; position: fixed; inset: 0; z-index: 9999;
-    background: rgba(18,22,33,0.96); backdrop-filter: blur(6px);
-    overflow-y: auto; padding: 20px;
-  }
-  .quiz-overlay.active { display: flex; align-items: flex-start; justify-content: center; }
-  .qo-inner {
-    background: var(--white); border-radius: 20px; padding: 32px 24px;
-    max-width: 500px; width: 100%; margin: auto; color: #1a1f2e;
-  }
-  .qo-progress { display: flex; gap: 6px; margin-bottom: 8px; }
-  .qo-progress span { height: 5px; border-radius: 3px; background: #e0e4ea; flex: 1; transition: background 0.3s; }
-  .qo-progress span.done { background: var(--orange); }
-  .qo-progress-label { font-size: 11px; color: #8a939f; font-weight: 600; text-align: right; margin-bottom: 20px; }
-
-  .qo-step { display: none; }
-  .qo-step.active { display: block; }
-
-  .qo-icon { font-size: 40px; text-align: center; margin-bottom: 8px; }
-  .qo-label { text-align: center; font-size: 11px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; color: var(--orange); margin-bottom: 10px; }
-  .qo-question { text-align: center; font-size: clamp(19px, 5vw, 24px); font-weight: 800; color: #1a1f2e; line-height: 1.25; margin-bottom: 24px; }
-  .qo-options { display: flex; flex-direction: column; gap: 12px; }
-  .qo-opt {
-    background: var(--orange); color: #fff; border: none;
-    border-radius: 12px; padding: 17px 22px; font-size: 16px; font-weight: 700;
-    cursor: pointer; text-align: left; transition: background 0.18s, transform 0.12s; width: 100%;
-  }
-  .qo-opt:hover { background: var(--orange-dark); transform: translateY(-1px); }
-  .qo-opt:active { transform: scale(0.98); }
-
-  /* ZIP — green */
-  .qo-zip-wrap { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
-  .qo-zip-wrap input {
-    width: 100%; padding: 16px 20px; font-size: 22px; font-weight: 700;
-    border: 2px solid #dde2ea; border-radius: 12px; outline: none;
-    color: #1a1f2e; text-align: center; letter-spacing: 3px; transition: border-color 0.2s;
-  }
-  .qo-zip-wrap input:focus { border-color: var(--green); }
-  .qo-zip-wrap button {
-    background: var(--green); color: #fff; border: none;
-    border-radius: 12px; padding: 17px; font-size: 17px; font-weight: 800;
-    cursor: pointer; transition: background 0.18s;
-  }
-  .qo-zip-wrap button:hover { background: var(--green-dark); }
-
-  .zip-complete-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: #edfaf3; border: 1.5px solid var(--green);
-    color: #1a7a48; font-size: 12px; font-weight: 800;
-    padding: 7px 16px; border-radius: 20px; margin-bottom: 16px;
-  }
-  .zip-complete-badge::before { content: '✓'; font-size: 14px; font-weight: 900; color: var(--green); }
-  .zip-congrats-headline { text-align: center; font-size: clamp(20px, 5vw, 25px); font-weight: 900; color: #1a1f2e; line-height: 1.2; margin-bottom: 8px; }
-  .zip-congrats-sub { text-align: center; font-size: 14px; color: #4d5663; margin-bottom: 20px; line-height: 1.55; }
-  .zip-congrats-sub strong { color: var(--green-dark); }
-
-  /* CALL step */
-  .qo-call-wrap { text-align: center; padding-top: 8px; }
-  .qo-call-wrap .call-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: #edfaf3; border: 1px solid var(--green);
-    color: #1a7a48; font-size: 13px; font-weight: 700;
-    padding: 8px 16px; border-radius: 20px; margin-bottom: 20px;
-  }
-  .qo-call-wrap .call-badge::before {
-    content: ''; width: 8px; height: 8px;
-    background: var(--green); border-radius: 50%;
-    animation: pulse-dot 1.2s infinite;
-  }
-  .qo-call-wrap .call-headline { font-size: clamp(20px, 5vw, 26px); font-weight: 900; color: #1a1f2e; line-height: 1.2; margin-bottom: 10px; }
-  .qo-call-wrap .call-sub { font-size: 14px; color: #6b7480; margin-bottom: 22px; line-height: 1.55; }
-
-  .local-rate-box {
-    background: #f4faf7; border: 1.5px solid var(--green);
-    border-radius: 12px; padding: 14px 18px; margin-bottom: 22px; text-align: left;
-  }
-  .local-rate-box .lrb-label { font-size: 10px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; color: var(--green-dark); margin-bottom: 6px; }
-  .local-rate-box .lrb-range { font-size: 22px; font-weight: 900; color: #1a1f2e; margin-bottom: 3px; }
-  .local-rate-box .lrb-note { font-size: 12px; color: #6b7480; line-height: 1.5; }
-  .local-rate-box .lrb-note strong { color: #1a1f2e; }
-
-  /* ===== GREEN CALL BUTTON — FINAL SCREEN ONLY ===== */
-  .call-btn-green {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    background: #2ECC71 !important;
-    color: #ffffff !important;
-    text-decoration: none;
-    border-radius: 14px;
-    padding: 20px 28px;
-    font-size: 19px;
-    font-weight: 900;
-    letter-spacing: 0.3px;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    margin-bottom: 12px;
-    animation: pulse-green 2s infinite;
-    transition: background 0.18s, transform 0.12s;
-  }
-  .call-btn-green:hover {
-    background: #27ae60 !important;
-    transform: translateY(-2px);
-  }
-
-  .call-reassure { font-size: 12px; color: #8a939f; text-align: center; line-height: 1.5; margin-top: 6px; }
-
-  /* FOOTER */
-  .legal-box {
-    max-width: 820px; margin: 24px auto 0; padding: 18px;
-    border: 1px solid rgba(255,255,255,0.08); background: #171b27; border-radius: 12px;
-  }
-  .legal-box strong { color: var(--white); display: block; margin-bottom: 6px; font-size: 13px; }
-  .legal-box p { font-size: 11px; color: #7f8895; line-height: 1.65; }
-
-  .site-footer { background: #13161f; padding: 28px 20px 40px; text-align: center; }
-  .site-footer p { font-size: 12px; color: #555d6b; line-height: 1.7; }
-  .site-footer a { color: #8a939f; text-decoration: none; cursor: pointer; }
-  .site-footer a:hover { text-decoration: underline; }
-  .legal-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-top: 14px; margin-bottom: 18px; }
-
-  /* MODALS */
-  .modal-overlay {
-    position: fixed; inset: 0;
-    background: rgba(9,12,19,0.82); backdrop-filter: blur(6px);
-    display: none; align-items: center; justify-content: center;
-    z-index: 10001; padding: 20px;
-  }
-  .modal-overlay.active { display: flex; }
-  .modal-box {
-    width: 100%; max-width: 700px; max-height: 85vh; overflow-y: auto;
-    background: #fff; color: #1a1f2e; border-radius: 18px;
-    padding: 26px 22px 22px; box-shadow: 0 30px 90px rgba(0,0,0,0.4);
-  }
-  .modal-close {
-    position: sticky; top: 0; margin-left: auto;
-    display: flex; align-items: center; justify-content: center;
-    width: 38px; height: 38px; border-radius: 50%; border: none;
-    background: #f1f4f7; color: #1a1f2e; font-size: 20px; cursor: pointer;
-  }
-  .modal-box h3 { font-size: 24px; line-height: 1.2; margin-bottom: 14px; font-weight: 900; }
-  .modal-box h4 { font-size: 15px; margin: 18px 0 8px; font-weight: 800; }
-  .modal-box p, .modal-box li { font-size: 14px; color: #4d5663; line-height: 1.65; }
-  .modal-box ul { padding-left: 18px; margin-top: 6px; }
-
-  @media (max-width: 400px) { .stat-grid { grid-template-columns: 1fr; } }
-</style>
+        @media (max-width: 480px) {
+            .floating-bar .fb-btn {
+                font-size: 12px;
+                padding: 10px 14px;
+            }
+            .floating-bar .fb-text span {
+                font-size: 12px;
+            }
+            .site-header .badge {
+                font-size: 10px;
+                padding: 3px 10px;
+            }
+            .calc-card {
+                padding: 24px 18px 20px;
+            }
+            .calc-card .calc-title {
+                font-size: 22px;
+            }
+            .calc-card .first-options .qo-opt {
+                font-size: 15px;
+                padding: 12px 16px;
+            }
+        }
+        @media (max-width: 400px) {
+            .qo-inner {
+                padding: 20px 16px 20px;
+            }
+            .result-price-box .price-range {
+                font-size: 24px;
+            }
+            .call-btn-green {
+                font-size: 15px;
+                padding: 15px 18px;
+            }
+            .result-phone {
+                font-size: 17px;
+            }
+            .loading-wrap .loader-icon {
+                font-size: 36px;
+            }
+            .loading-wrap .loading-text {
+                font-size: 16px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<!-- FLOATING BOTTOM BAR -->
-<div class="floating-bar">
-  <div class="fb-label">
-    <div class="fb-icon">📞</div>
-    <div class="fb-text">
-      <strong>Free Mold Removal Hotline</strong>
-      <span>Licensed Specialists · 24/7</span>
-    </div>
-  </div>
-  <a href="tel:+18332464467" class="fb-btn">Call Now →</a>
-</div>
-
-<!-- HEADER -->
-<header class="site-header">
-  <div class="brand"><span>MOLD</span>RESOLVE</div>
-  <div class="badge">Specialists Available Now</div>
-</header>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="container">
-    <div class="eyebrow">⚠️ 24/7 Mold Removal Hotline</div>
-    <h1>Mold Spreads Every Hour It's Left Alone — <em>Find Out What You're Dealing With</em></h1>
-    <p class="sub">Answer 3 quick questions. A licensed mold specialist will give you an honest scope and price — no salespeople, no pressure, no guessing.</p>
-    <div class="trust-row">
-      <span class="trust-item">🔒 No obligation</span>
-      <span class="trust-item">⏱️ 2–3 minutes</span>
-      <span class="trust-item">✅ Licensed pros only</span>
-    </div>
-  </div>
-</section>
-
-<!-- QUIZ CARD 1 -->
-<section class="quiz-section">
-  <div class="quiz-card">
-    <div class="quiz-icon">🏠</div>
-    <div class="quiz-label">Free Mold Estimate — Start Here</div>
-    <div class="quiz-question">Where did you find mold or notice a mold smell?</div>
-    <div class="quiz-options">
-      <button class="quiz-opt" onclick="startQuiz('Basement or Crawl Space')">🔦 Basement or Crawl Space</button>
-      <button class="quiz-opt" onclick="startQuiz('Bathroom or Kitchen')">🚿 Bathroom or Kitchen</button>
-      <button class="quiz-opt" onclick="startQuiz('Attic or Roof Area')">🏚️ Attic or Roof Area</button>
-      <button class="quiz-opt" onclick="startQuiz('I just smell it — not sure where')">👃 I just smell it — not sure where</button>
-    </div>
-    <div class="quiz-footer">
-      <div>No commitment required · Licensed specialists only</div>
-      <div class="brands"><span>EPA Compliant</span> · <span>Licensed &amp; Insured</span> · <span>24/7 Response</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- POWER SECTION 1 -->
-<section class="power-section">
-  <div class="container">
-    <div class="ps-eyebrow">What the EPA and CDC Actually Say</div>
-    <h2>Mold Doesn't Wait. Neither Should You.</h2>
-    <p class="ps-sub">This isn't a scare tactic — it's basic microbiology. Here's what the data says about delayed remediation.</p>
-    <div class="stat-grid">
-      <div class="stat-box">
-        <div class="num">24–48<br><span style="font-size:16px;font-weight:700">hrs</span></div>
-        <div class="lbl">For mold to begin colonizing a wet surface (EPA)</div>
-      </div>
-      <div class="stat-box">
-        <div class="num">$300–5K<br><span style="font-size:14px;font-weight:700">avg</span></div>
-        <div class="lbl">Typical remediation when caught early vs. $15K+ when spread</div>
-      </div>
-      <div class="stat-box">
-        <div class="num">1 in 5</div>
-        <div class="lbl">U.S. homes has a moisture problem that enables mold growth</div>
-      </div>
-      <div class="stat-box">
-        <div class="num">21%</div>
-        <div class="lbl">Of asthma cases in the U.S. linked to damp indoor environments (WHO)</div>
-      </div>
-    </div>
-    <div class="risk-row">
-      <div class="risk-item">
-        <div class="ri-icon">🫁</div>
-        <div class="ri-text">
-          <strong>Respiratory exposure is cumulative</strong>
-          <span>Mold spores accumulate in air systems and spread to unaffected rooms. The longer you wait, the larger the exposure zone.</span>
+    <!-- ─── FLOATING BAR ─── -->
+    <div class="floating-bar">
+        <div class="fb-label">
+            <div class="fb-icon">📞</div>
+            <div class="fb-text">
+                <strong>Immediate Mold Relief</strong>
+                <span>Licensed Specialists · 24/7</span>
+            </div>
         </div>
-      </div>
-      <div class="risk-item">
-        <div class="ri-icon">🏗️</div>
-        <div class="ri-text">
-          <strong>Structural damage compounds</strong>
-          <span>Drywall, subfloor, and framing absorb moisture. Once mold reaches wood framing, remediation cost escalates significantly.</span>
+        <a href="tel:+18332464467" class="fb-btn">Call Now →</a>
+    </div>
+
+    <!-- ─── HEADER ─── -->
+    <header class="site-header">
+        <div class="brand"><span>Mold</span>Resolve</div>
+        <div class="badge">Specialists Available Now</div>
+    </header>
+
+    <!-- ─── HERO ─── -->
+    <section class="hero">
+        <div class="container">
+            <div class="eyebrow"><span class="calc-icon">🧮</span> Mold Removal Calculator</div>
+            <h1>Get Your <em>Instant Estimate</em> — Free</h1>
+            <p class="sub">Answer 5 quick questions. Get a realistic price range. Then speak with a licensed specialist.</p>
         </div>
-      </div>
-      <div class="risk-item">
-        <div class="ri-icon">🏡</div>
-        <div class="ri-text">
-          <strong>Real estate disclosure requirements</strong>
-          <span>In most states, known mold must be disclosed on sale. A documented remediation from a licensed pro actually protects your property value.</span>
+    </section>
+
+    <!-- ─── CALCULATOR CARD (clean, no footer) ─── -->
+    <section class="calc-section">
+        <div class="calc-card">
+            <div class="calc-icon-big">🏠</div>
+            <div class="calc-label">Free Mold Removal Quote</div>
+            <div class="calc-title">Do you own or rent the property?</div>
+            <div class="first-options">
+                <button class="qo-opt" onclick="openQuizFromCard('own', 1.0)"><span class="qo-emoji">🏠</span> I own it</button>
+                <button class="qo-opt" onclick="openQuizFromCard('rent', 0.85)"><span class="qo-emoji">🔑</span> I rent it</button>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="science-card">
-      <div class="sc-title">The honest math on waiting</div>
-      <p>A licensed specialist can typically assess your situation in a single call. <strong>The cost of that call: zero.</strong> The cost of finding out you waited too long: multiple estimates put secondary remediation (when mold has spread structurally) at 3–5× the cost of early intervention. These numbers come from EPA and CDC guidance — not our sales copy.</p>
-    </div>
-    <div class="source-note">Sources: EPA Indoor Air Quality Guide, WHO Housing and Health Guidelines, CDC Mold Resources</div>
-  </div>
-</section>
+    </section>
 
-<!-- QUIZ CARD 2 -->
-<section class="quiz-section" style="padding-top:0; padding-bottom:56px;">
-  <div class="quiz-card">
-    <div class="quiz-icon">🔍</div>
-    <div class="quiz-label">Free Mold Estimate — 3 Questions</div>
-    <div class="quiz-question">Have you noticed mold, a musty smell, or water damage in the last 90 days?</div>
-    <div class="quiz-options">
-      <button class="quiz-opt" onclick="startQuiz('Yes — I can see visible mold')">✅ Yes — I can see visible mold</button>
-      <button class="quiz-opt" onclick="startQuiz('I smell it but cannot see it')">👃 I smell it but cannot see it</button>
-      <button class="quiz-opt" onclick="startQuiz('We had a water leak or flood')">💧 We had a water leak or flood</button>
-      <button class="quiz-opt" onclick="startQuiz('Not sure — want a professional opinion')">🤔 Not sure — want a professional opinion</button>
-    </div>
-    <div class="quiz-footer">No commitment required · Honest answers · Licensed pros only</div>
-  </div>
-</section>
+    <!-- ─── OVERLAY CALCULATOR ─── -->
+    <div class="quiz-overlay" id="quizOverlay">
+        <div class="qo-inner">
+            <div class="qo-progress" id="qoProgress">
+                <span id="prog0"></span><span id="prog1"></span><span id="prog2"></span><span id="prog3"></span><span id="prog4"></span>
+            </div>
+            <div class="qo-progress-label" id="qoProgressLabel">Question 1 of 5</div>
 
-<!-- POWER SECTION 2 -->
-<section class="power-section alt">
-  <div class="container">
-    <div class="ps-eyebrow" style="color:var(--green)">How This Works</div>
-    <h2>3 Steps to a Clean, Safe Home</h2>
-    <p class="ps-sub">No lengthy intake forms. No waiting days for a callback. Just a fast, direct path to a licensed specialist who knows mold.</p>
-    <div class="steps">
-      <div class="step">
-        <div class="sn">1</div>
-        <div class="st">
-          <strong>Answer 3 Questions (2 minutes)</strong>
-          <span>Tell us where the mold is, how long it's been there, and your zip code. That's all we need to connect you to the right specialist for your area.</span>
+            <!-- Step 0: own/rent — Q1 of 5 -->
+            <div class="qo-step active" id="qoStep0">
+                <div class="qo-icon">🏠</div>
+                <div class="qo-label">Question 1 of 5</div>
+                <div class="qo-question">Do you own or rent the property?</div>
+                <div class="qo-options">
+                    <button class="qo-opt" onclick="nextStep(0, 'own', 1.0)"><span class="qo-emoji">🏠</span> I own it</button>
+                    <button class="qo-opt" onclick="nextStep(0, 'rent', 0.85)"><span class="qo-emoji">🔑</span> I rent it</button>
+                </div>
+            </div>
+
+            <!-- Step 1: property type -->
+            <div class="qo-step" id="qoStep1">
+                <div class="qo-icon">🏘️</div>
+                <div class="qo-label">Question 1 of 5</div>
+                <div class="qo-question">What type of property is it?</div>
+                <div class="qo-options">
+                    <button class="qo-opt" onclick="nextStep(1, 'single', 1.0)"><span class="qo-emoji">🏡</span> Single‑family</button>
+                    <button class="qo-opt" onclick="nextStep(1, 'condo', 0.9)"><span class="qo-emoji">🏢</span> Condo / Apartment</button>
+                    <button class="qo-opt" onclick="nextStep(1, 'townhouse', 0.95)"><span class="qo-emoji">🏘️</span> Townhouse</button>
+                    <button class="qo-opt" onclick="nextStep(1, 'mobile', 0.85)"><span class="qo-emoji">🚐</span> Mobile / Manufactured</button>
+                </div>
+            </div>
+
+            <!-- Step 2: square footage with "Not sure" -->
+            <div class="qo-step" id="qoStep2">
+                <div class="qo-icon">📐</div>
+                <div class="qo-label">Question 2 of 5</div>
+                <div class="qo-question">How many square feet are affected?</div>
+                <div class="qo-options">
+                    <button class="qo-opt" onclick="nextStep(2, 'under50', 25)"><span class="qo-emoji">🟢</span> Less than 50</button>
+                    <button class="qo-opt" onclick="nextStep(2, '50to150', 100)"><span class="qo-emoji">🟡</span> 50 – 150</button>
+                    <button class="qo-opt" onclick="nextStep(2, '150to300', 225)"><span class="qo-emoji">🟠</span> 150 – 300</button>
+                    <button class="qo-opt" onclick="nextStep(2, '300to500', 400)"><span class="qo-emoji">🔶</span> 300 – 500</button>
+                    <button class="qo-opt" onclick="nextStep(2, 'over500', 750)"><span class="qo-emoji">🔴</span> More than 500</button>
+                    <button class="qo-opt" onclick="nextStep(2, 'notsure', 300)"><span class="qo-emoji">🤔</span> Not sure</button>
+                </div>
+            </div>
+
+            <!-- Step 3: location -->
+            <div class="qo-step" id="qoStep3">
+                <div class="qo-icon">📍</div>
+                <div class="qo-label">Question 3 of 5</div>
+                <div class="qo-question">Where is the mold located?</div>
+                <div class="qo-options">
+                    <button class="qo-opt" onclick="nextStep(3, 'bathroom', 0.9)"><span class="qo-emoji">🚿</span> Bathroom</button>
+                    <button class="qo-opt" onclick="nextStep(3, 'kitchen', 0.9)"><span class="qo-emoji">🍳</span> Kitchen</button>
+                    <button class="qo-opt" onclick="nextStep(3, 'basement', 1.2)"><span class="qo-emoji">⬇️</span> Basement</button>
+                    <button class="qo-opt" onclick="nextStep(3, 'attic', 1.1)"><span class="qo-emoji">⬆️</span> Attic</button>
+                    <button class="qo-opt" onclick="nextStep(3, 'multiple', 1.4)"><span class="qo-emoji">🔄</span> Multiple rooms</button>
+                    <button class="qo-opt" onclick="nextStep(3, 'behindwalls', 1.5)"><span class="qo-emoji">🧱</span> Behind walls</button>
+                </div>
+            </div>
+
+            <!-- Step 4: duration — Q4 of 5 -->
+            <div class="qo-step" id="qoStep4">
+                <div class="qo-icon">⏳</div>
+                <div class="qo-label">Question 4 of 5</div>
+                <div class="qo-question">How long has mold been present?</div>
+                <div class="qo-options">
+                    <button class="qo-opt" onclick="nextStep(4, 'under1wk', 0.85)"><span class="qo-emoji">🟢</span> Less than 1 week</button>
+                    <button class="qo-opt" onclick="nextStep(4, '1to4wk', 0.95)"><span class="qo-emoji">🟡</span> 1–4 weeks</button>
+                    <button class="qo-opt" onclick="nextStep(4, '1to3mo', 1.2)"><span class="qo-emoji">🟠</span> 1–3 months</button>
+                    <button class="qo-opt" onclick="nextStep(4, 'over3mo', 1.4)"><span class="qo-emoji">🔴</span> Over 3 months</button>
+                </div>
+            </div>
+
+            <!-- Step 5: water damage — Q5 of 5 -->
+            <div class="qo-step" id="qoStep5">
+                <div class="qo-icon">💧</div>
+                <div class="qo-label">Question 5 of 5</div>
+                <div class="qo-question">Any water damage?</div>
+                <div class="qo-options">
+                    <button class="qo-opt" onclick="nextStep(5, 'no_water', 1.0)"><span class="qo-emoji">✅</span> No water damage</button>
+                    <button class="qo-opt" onclick="nextStep(5, 'minor_water', 1.15)"><span class="qo-emoji">🟡</span> Minor water damage</button>
+                    <button class="qo-opt" onclick="nextStep(5, 'active_water', 1.35)"><span class="qo-emoji">🟠</span> Active / ongoing leak</button>
+                    <button class="qo-opt" onclick="nextStep(5, 'flood_water', 1.5)"><span class="qo-emoji">🔴</span> Flooding / major damage</button>
+                </div>
+            </div>
+
+            <!-- Step 6: LOADING -->
+            <div class="qo-step" id="qoStep6">
+                <div class="loading-wrap">
+                    <div class="loader-icon">⚙️</div>
+                    <div class="loading-text">Calculating your estimate…</div>
+                    <div class="loading-sub">Pulling local market data &amp; analyzing your situation…</div>
+                    <div class="loading-bar-track">
+                        <div class="loading-bar-fill" id="loadingBarFill"></div>
+                    </div>
+                    <div class="loading-bar-pct" id="loadingBarPct">0%</div>
+                </div>
+            </div>
+
+            <!-- Step 7: RESULT -->
+            <div class="qo-step" id="qoStep7">
+                <div class="result-wrap">
+                    <div class="result-badge">Your Custom Estimate</div>
+                    <div class="result-headline">Here's What Mold Remediation <br>Typically Costs in Your Situation</div>
+                    <div class="result-sub">Based on your answers and current market rates.</div>
+
+                    <div class="result-price-box">
+                        <div class="price-label">📊 Estimated Remediation Range</div>
+                        <div class="price-range"><span class="dollar">$</span><span id="resultLow">0</span> – <span class="dollar">$</span><span id="resultHigh">0</span></div>
+                        <div class="price-note"><strong>Final price depends on inspection</strong> — your <strong>free</strong> call with a licensed specialist will confirm the exact number.</div>
+                    </div>
+
+                    <div class="result-breakdown" id="resultBreakdown">
+                        <div class="br-row"><span>🏠 Ownership</span> <strong id="brOwn">—</strong></div>
+                        <div class="br-row"><span>🏘️ Property type</span> <strong id="brProp">—</strong></div>
+                        <div class="br-row"><span>📐 Affected area</span> <strong id="brArea">—</strong></div>
+                        <div class="br-row"><span>📍 Mold location</span> <strong id="brLoc">—</strong></div>
+                        <div class="br-row"><span>⏳ Duration</span> <strong id="brDur">—</strong></div>
+                        <div class="br-row"><span>💧 Water damage</span> <strong id="brWater">—</strong></div>
+                        <div class="br-row" style="border-top:2px solid var(--border);padding-top:6px;margin-top:4px;font-weight:700;"><span>🧮 Calculated range</span> <strong id="brRange">—</strong></div>
+                    </div>
+
+                    <div class="call-sub" style="font-size:14px;color:var(--text-muted);margin-bottom:14px;line-height:1.55;">
+                        <strong>This estimate is based on real market data.</strong> To get your <strong>exact, no-obligation quote</strong>, speak with a licensed specialist now.
+                    </div>
+
+                    <a href="tel:+18332464467" class="call-btn-green">
+                        📞 Call Now — <span class="result-phone" style="display:inline;font-size:inherit;color:inherit;">1-833-246-4467</span>
+                    </a>
+
+                    <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;">
+                        <span style="font-size:11px;font-weight:700;color:var(--text-faint);letter-spacing:0.5px;text-transform:uppercase;">⭐ 24/7 Hotline</span>
+                        <span style="width:4px;height:4px;border-radius:50%;background:var(--text-faint);"></span>
+                        <span style="font-size:11px;font-weight:700;color:var(--text-faint);letter-spacing:0.5px;text-transform:uppercase;">📋 Licensed specialists</span>
+                        <span style="width:4px;height:4px;border-radius:50%;background:var(--text-faint);"></span>
+                        <span style="font-size:11px;font-weight:700;color:var(--text-faint);letter-spacing:0.5px;text-transform:uppercase;">🔒 No obligation</span>
+                    </div>
+
+                    <div class="call-reassure">
+                        <strong>No work begins without your written approval.</strong> The call takes 2–3 minutes and connects you with a <strong>local, licensed</strong> mold specialist who will give you honest answers and a firm price.
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="step">
-        <div class="sn">2</div>
-        <div class="st">
-          <strong>Talk to a Licensed Mold Pro</strong>
-          <span>You reach a certified mold remediation specialist — not a call center, not a salesperson. They give you an honest scope, realistic cost range, and straight answers.</span>
+    </div>
+
+    <!-- ─── FOOTER ─── -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>
+                <strong style="color:var(--text);">MoldResolve</strong> · Mold Removal Referral Service<br>
+                No work begins without written authorization from the homeowner.
+            </p>
+            <div class="legal-links">
+                <a onclick="openModal('privacyModal')">Privacy</a>
+                <a onclick="openModal('termsModal')">Terms</a>
+                <a onclick="openModal('disclaimerModal')">Disclaimer</a>
+            </div>
+            <div class="legal-box">
+                <strong>Disclaimer</strong>
+                <p>MoldResolve is a free service to assist homeowners in connecting with local service providers. All contractors/providers are independent and MoldResolve does not warrant or guarantee any work performed. It is the responsibility of the homeowner to verify that the hired contractor furnishes the necessary license and insurance required for the work being performed. All persons depicted are actors or models and not contractors listed on MoldResolve. Same-day and 24/7 services are subject to provider participation, location, and demand.</p>
+            </div>
         </div>
-      </div>
-      <div class="step">
-        <div class="sn">3</div>
-        <div class="st">
-          <strong>Decide With Full Information</strong>
-          <span>No work begins without your written approval. You get the facts first. The decision is always yours. No pressure, no obligation.</span>
+    </footer>
+
+    <!-- ─── MODALS ─── -->
+    <div class="modal-overlay" id="privacyModal" onclick="closeModalOnBackdrop(event,'privacyModal')">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal('privacyModal')">&times;</button>
+            <h3>Privacy Policy</h3>
+            <p>MoldResolve helps connect homeowners with independent service providers. When you use this site, information you submit — including quiz responses and call actions — may be used to help route your request to a local provider.</p>
+            <h4>Information We Collect</h4>
+            <ul>
+                <li>Information you enter into the calculator or contact flow.</li>
+                <li>Device, browser, and usage information used for analytics and site performance.</li>
+                <li>Call interaction data when you use a call tracking number.</li>
+            </ul>
+            <h4>How Information Is Used</h4>
+            <ul>
+                <li>To connect you with a relevant local provider.</li>
+                <li>To operate, improve, and secure the website.</li>
+                <li>To measure advertising and conversion performance.</li>
+            </ul>
+            <h4>Sharing</h4>
+            <p>Information may be shared with service providers, technology vendors, analytics tools, and call-routing systems as needed to operate this service. MoldResolve does not sell personal information as a standalone data product.</p>
+            <h4>Your Choices</h4>
+            <p>You may stop using the site at any time. If you do not want information routed to a provider, do not submit the quiz or place a call.</p>
         </div>
-      </div>
     </div>
-    <div class="checklist" style="margin-top:32px;">
-      <div class="check-item">
-        <div class="ci-icon">🛡️</div>
-        <div class="ci-text">
-          <strong>Licensed &amp; Insured Specialists</strong>
-          <span>Every pro in our network carries the proper state licensing and liability coverage. You are protected.</span>
+
+    <div class="modal-overlay" id="termsModal" onclick="closeModalOnBackdrop(event,'termsModal')">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal('termsModal')">&times;</button>
+            <h3>Terms of Service</h3>
+            <p>By using MoldResolve, you understand that this website is a referral and connection service, not a contractor, remediation company, or insurer.</p>
+            <h4>Service Scope</h4>
+            <ul>
+                <li>MoldResolve connects homeowners with independent third-party providers.</li>
+                <li>MoldResolve does not perform remediation work directly.</li>
+                <li>Any contract for services is solely between the homeowner and the provider.</li>
+            </ul>
+            <h4>No Warranty</h4>
+            <p>MoldResolve makes no warranty or guarantee regarding provider availability, response time, pricing, service quality, licensing status, insurance status, or work outcome.</p>
+            <h4>User Responsibility</h4>
+            <p>You are responsible for verifying provider credentials, insurance, scope of work, pricing, and written approvals before authorizing any service.</p>
+            <h4>Limitation</h4>
+            <p>MoldResolve is not liable for damages, disputes, losses, delays, or dissatisfaction arising from work performed or not performed by an independent provider.</p>
         </div>
-      </div>
-      <div class="check-item">
-        <div class="ci-icon">🕐</div>
-        <div class="ci-text">
-          <strong>Available 24 Hours a Day, 7 Days a Week</strong>
-          <span>Mold doesn't keep business hours. Our hotline doesn't either. Call at 2am if you need to.</span>
+    </div>
+
+    <div class="modal-overlay" id="disclaimerModal" onclick="closeModalOnBackdrop(event,'disclaimerModal')">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal('disclaimerModal')">&times;</button>
+            <h3>Disclaimer</h3>
+            <p>MoldResolve is a free service to assist homeowners in connecting with local service providers. All contractors/providers are independent and MoldResolve does not warrant or guarantee any work performed. It is the responsibility of the homeowner to verify that the hired contractor furnishes the necessary license and insurance required for the work being performed. All persons depicted are actors or models and not contractors listed on MoldResolve. Same-day and 24/7 services are subject to provider participation, location, and demand.</p>
         </div>
-      </div>
-      <div class="check-item">
-        <div class="ci-icon">💬</div>
-        <div class="ci-text">
-          <strong>Straight Answers — Even If You Don't Book</strong>
-          <span>Our specialists are incentivized to give honest assessments, not to upsell you. If your situation is minor, they will tell you.</span>
-        </div>
-      </div>
-      <div class="check-item">
-        <div class="ci-icon">📋</div>
-        <div class="ci-text">
-          <strong>Nothing Starts Without Written Approval</strong>
-          <span>No crew shows up, no work begins, no invoice is generated until you authorize in writing. You stay in control.</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- QUIZ CARD 3 -->
-<section class="quiz-section" style="background:var(--dark2); padding:56px 20px;">
-  <div class="container">
-    <div style="text-align:center; margin-bottom:24px;">
-      <div class="ps-eyebrow">Last Chance to Get Clarity</div>
-      <h2 style="font-size:clamp(22px,5.5vw,30px); margin-bottom:10px;">Still Wondering If It's Worth a Call?</h2>
-      <p style="font-size:14px; color:#8a939f; max-width:400px; margin:0 auto;">It takes 2 minutes. A licensed specialist answers. You get real answers — no obligation.</p>
-    </div>
-    <div class="quiz-card" style="background:var(--dark3); border:1px solid rgba(232,130,12,0.2);">
-      <div class="quiz-icon" style="color:var(--white);">🧪</div>
-      <div class="quiz-label">Free Mold Estimate</div>
-      <div class="quiz-question" style="color:var(--white);">How long has the mold or smell been present?</div>
-      <div class="quiz-options">
-        <button class="quiz-opt" onclick="startQuiz('Less than a week')">📅 Less than a week</button>
-        <button class="quiz-opt" onclick="startQuiz('1–4 weeks')">📅 1–4 weeks</button>
-        <button class="quiz-opt" onclick="startQuiz('1–3 months')">📅 1–3 months</button>
-        <button class="quiz-opt" onclick="startQuiz('Longer than 3 months — or not sure')">📅 Longer than 3 months — or not sure</button>
-      </div>
-      <div class="quiz-footer" style="color:#666;">No commitment · 2–3 minutes · Licensed specialists only</div>
-    </div>
-  </div>
-</section>
-
-<!-- FULL SCREEN QUIZ OVERLAY -->
-<div class="quiz-overlay" id="quizOverlay">
-  <div class="qo-inner">
-    <div class="qo-progress" id="qoProgress">
-      <span id="prog0"></span>
-      <span id="prog1"></span>
-      <span id="prog2"></span>
-    </div>
-    <div class="qo-progress-label" id="qoProgressLabel">Question 2 of 3</div>
-
-    <!-- Q2 -->
-    <div class="qo-step active" id="qoStep0">
-      <div class="qo-icon">🏠</div>
-      <div class="qo-label">Question 2 of 3 — Free Mold Estimate</div>
-      <div class="qo-question">What best describes the mold or damage you found?</div>
-      <div class="qo-options">
-        <button class="qo-opt" onclick="nextStep(0, 'Visible mold growth on a surface')">🔍 Visible mold growth on a surface</button>
-        <button class="qo-opt" onclick="nextStep(0, 'Strong musty or earthy odor')">👃 Strong musty or earthy odor</button>
-        <button class="qo-opt" onclick="nextStep(0, 'Water damage or recent leak')">💧 Water damage or recent leak</button>
-        <button class="qo-opt" onclick="nextStep(0, 'Health symptoms — my doctor mentioned mold')">🩺 Health symptoms — my doctor mentioned mold</button>
-      </div>
     </div>
 
-    <!-- Q3 -->
-    <div class="qo-step" id="qoStep1">
-      <div class="qo-icon">📍</div>
-      <div class="qo-label">Question 3 of 3 — Free Mold Estimate</div>
-      <div class="qo-question">What type of property is affected?</div>
-      <div class="qo-options">
-        <button class="qo-opt" onclick="nextStep(1, 'Single-family home')">🏡 Single-family home</button>
-        <button class="qo-opt" onclick="nextStep(1, 'Condo or apartment')">🏢 Condo or apartment</button>
-        <button class="qo-opt" onclick="nextStep(1, 'Rental property I own')">🔑 Rental property I own</button>
-        <button class="qo-opt" onclick="nextStep(1, 'Commercial or other')">🏗️ Commercial or other</button>
-      </div>
-    </div>
+    <script>
+        // ─── CALCULATOR STATE ───
+        var calcData = {
+            ownType: null,
+            ownMult: 1.0,
+            propType: null,
+            propMult: 1.0,
+            sqft: 0,
+            sqftLabel: '',
+            location: null,
+            locMult: 1.0,
+            locLabel: '',
+            duration: null,
+            durMult: 1.0,
+            durLabel: '',
+            waterDamage: null,
+            waterMult: 1.0,
+            waterLabel: '',
+            step: 0,
+            answers: {}
+        };
 
-    <!-- ZIP — green -->
-    <div class="qo-step" id="qoStep2">
-      <div style="text-align:center; margin-bottom:18px;">
-        <div class="zip-complete-badge">Estimate Complete</div>
-        <div class="zip-congrats-headline">Enter Your ZIP to Calculate <strong style="color:#2ECC71">Local Rates</strong></div>
-        <div class="zip-congrats-sub">Remediation costs vary by market. Your ZIP lets us show you <strong>what homeowners in your area are paying</strong> and connect you to the nearest licensed specialist.</div>
-      </div>
-      <div class="qo-zip-wrap">
-        <input type="tel" id="zipInput" placeholder="Enter ZIP Code" maxlength="5" pattern="[0-9]{5}" inputmode="numeric" />
-        <button onclick="goToCall()">Calculate Local Rates →</button>
-      </div>
-      <div class="call-reassure" style="margin-top:10px; color:#8a939f;">Your information is not sold or shared.</div>
-    </div>
+        // Steps 0–5 = questions, 6 = loading, 7 = result
+        var stepLabels = [
+            'Question 1 of 5',
+            'Question 1 of 5',
+            'Question 2 of 5',
+            'Question 3 of 5',
+            'Question 4 of 5',
+            'Question 5 of 5',
+            'Calculating…',
+            'Your Estimate'
+        ];
 
-    <!-- CALL — GREEN BUTTON -->
-    <div class="qo-step" id="qoStep3">
-      <div class="qo-call-wrap">
-        <div class="call-badge">Specialists Available Right Now</div>
-        <div class="call-headline">Your Local Rate Has Been Calculated</div>
-        <div class="local-rate-box">
-          <div class="lrb-label">📍 Estimated Local Remediation Range</div>
-          <div class="lrb-range">$300 – $6,800</div>
-          <div class="lrb-note">Based on reported costs in your area for early-to-mid stage remediation. <strong>A licensed specialist on this call will give you the exact number for your situation — at no charge.</strong></div>
-        </div>
-        <div class="call-sub">The only way to lock in an accurate price — not an estimate — is to speak with a licensed pro who can evaluate your specific situation. That call is free, takes 2–3 minutes, and comes with zero obligation.</div>
-        <a href="tel:+18332464467" class="call-btn-green">
-          📞 Call the 24/7 Mold Hotline
-        </a>
-        <div class="call-reassure">
-          No obligation · No work begins without written approval<br>
-          Licensed &amp; insured specialists · 2–3 minute call
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+        // ─── Open quiz at step 1 (Q1 of 5) from the on-page card ───
+        // Captures own/rent from the landing card, then opens at Q1
+        function openQuizFromCard(value, num) {
+            calcData.ownType = value;
+            calcData.ownMult = num;
+            calcData.answers['step0'] = { value: value, num: num };
+            document.getElementById('quizOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            window.scrollTo(0, 0);
+            updateProgress(1);
+            showStep(1);
+        }
 
-<!-- FOOTER -->
-<footer class="site-footer">
-  <div class="container">
-    <p>
-      <strong style="color:#8a939f;">MoldResolve</strong> · Mold Removal Referral Service<br>
-      This site helps connect homeowners with independent local service providers.<br>
-      No work begins without written authorization from the homeowner.
-    </p>
-    <div class="legal-links">
-      <a onclick="openModal('privacyModal')">Privacy Policy</a>
-      <a onclick="openModal('termsModal')">Terms of Service</a>
-      <a onclick="openModal('disclaimerModal')">Disclaimer</a>
-    </div>
-    <div class="legal-box">
-      <strong>Disclaimer</strong>
-      <p>MoldResolve is a free service to assist homeowners in connecting with local service providers. All contractors/providers are independent and MoldResolve does not warrant or guarantee any work performed. It is the responsibility of the homeowner to verify that the hired contractor furnishes the necessary license and insurance required for the work being performed. All persons depicted in a photo or video are actors or models and not contractors listed on MoldResolve. Same-day and 24/7 emergency services are subject to provider participation, location, technician availability, and demand. Availability is not guaranteed and may vary by market and appointment capacity.</p>
-    </div>
-  </div>
-</footer>
+        function showStep(n) {
+            for (var i = 0; i < 8; i++) {
+                var el = document.getElementById('qoStep' + i);
+                if (el) el.classList.remove('active');
+            }
+            var target = document.getElementById('qoStep' + n);
+            if (target) target.classList.add('active');
+            var overlay = document.getElementById('quizOverlay');
+            if (overlay) overlay.scrollTop = 0;
+            var labelEl = document.getElementById('qoProgressLabel');
+            if (labelEl) labelEl.textContent = stepLabels[n] || '';
+        }
 
-<!-- PRIVACY MODAL -->
-<div class="modal-overlay" id="privacyModal" onclick="closeModalOnBackdrop(event,'privacyModal')">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal('privacyModal')">&times;</button>
-    <h3>Privacy Policy</h3>
-    <p>MoldResolve helps connect homeowners with independent service providers. When you use this site, information you submit — including quiz responses, zip code, and call actions — may be used to help route your request to a local provider.</p>
-    <h4>Information We Collect</h4>
-    <ul>
-      <li>Information you enter into the quiz or contact flow.</li>
-      <li>Device, browser, and usage information used for analytics and site performance.</li>
-      <li>Call interaction data when you use a call tracking number.</li>
-    </ul>
-    <h4>How Information Is Used</h4>
-    <ul>
-      <li>To connect you with a relevant local provider.</li>
-      <li>To operate, improve, and secure the website.</li>
-      <li>To measure advertising and conversion performance.</li>
-    </ul>
-    <h4>Sharing</h4>
-    <p>Information may be shared with service providers, technology vendors, analytics tools, and call-routing systems as needed to operate this service. MoldResolve does not sell personal information as a standalone data product.</p>
-    <h4>Your Choices</h4>
-    <p>You may stop using the site at any time. If you do not want information routed to a provider, do not submit the quiz or place a call.</p>
-  </div>
-</div>
+        function updateProgress(completedSteps) {
+            for (var i = 0; i < 5; i++) {
+                var p = document.getElementById('prog' + i);
+                if (p) p.classList.toggle('done', i < completedSteps);
+            }
+        }
 
-<!-- TERMS MODAL -->
-<div class="modal-overlay" id="termsModal" onclick="closeModalOnBackdrop(event,'termsModal')">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal('termsModal')">&times;</button>
-    <h3>Terms of Service</h3>
-    <p>By using MoldResolve, you understand that this website is a referral and connection service, not a contractor, remediation company, or insurer.</p>
-    <h4>Service Scope</h4>
-    <ul>
-      <li>MoldResolve connects homeowners with independent third-party providers.</li>
-      <li>MoldResolve does not perform remediation work directly.</li>
-      <li>Any contract for services is solely between the homeowner and the provider.</li>
-    </ul>
-    <h4>No Warranty</h4>
-    <p>MoldResolve makes no warranty or guarantee regarding provider availability, response time, pricing, service quality, licensing status, insurance status, or work outcome.</p>
-    <h4>User Responsibility</h4>
-    <p>You are responsible for verifying provider credentials, insurance, scope of work, pricing, and written approvals before authorizing any service.</p>
-    <h4>Limitation</h4>
-    <p>MoldResolve is not liable for damages, disputes, losses, delays, or dissatisfaction arising from work performed or not performed by an independent provider.</p>
-  </div>
-</div>
+        function nextStep(fromStep, value, num) {
+            var key = 'step' + fromStep;
+            calcData.answers[key] = { value: value, num: num };
 
-<!-- DISCLAIMER MODAL -->
-<div class="modal-overlay" id="disclaimerModal" onclick="closeModalOnBackdrop(event,'disclaimerModal')">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal('disclaimerModal')">&times;</button>
-    <h3>Disclaimer</h3>
-    <p>MoldResolve is a free service to assist homeowners in connecting with local service providers. All contractors/providers are independent and MoldResolve does not warrant or guarantee any work performed. It is the responsibility of the homeowner to verify that the hired contractor furnishes the necessary license and insurance required for the work being performed. All persons depicted in a photo or video are actors or models and not contractors listed on MoldResolve. Same-day and 24/7 emergency services are subject to provider participation, location, technician availability, and demand. Availability is not guaranteed and may vary by market and appointment capacity.</p>
-  </div>
-</div>
+            switch (fromStep) {
+                case 0:
+                    calcData.ownType = value;
+                    calcData.ownMult = num;
+                    break;
+                case 1:
+                    calcData.propType = value;
+                    calcData.propMult = num;
+                    break;
+                case 2:
+                    calcData.sqft = num;
+                    calcData.sqftLabel = value;
+                    break;
+                case 3:
+                    calcData.location = value;
+                    calcData.locMult = num;
+                    calcData.locLabel = value;
+                    break;
+                case 4:
+                    calcData.duration = value;
+                    calcData.durMult = num;
+                    calcData.durLabel = value;
+                    break;
+                case 5:
+                    calcData.waterDamage = value;
+                    calcData.waterMult = num;
+                    calcData.waterLabel = value;
+                    break;
+            }
 
-<script>
-  var quizAnswers = {};
+            // After Q5 (fromStep === 5), go to loading (step 6)
+            if (fromStep === 5) {
+                updateProgress(5); // all 5 dots filled
+                showStep(6);       // loading screen
+                startLoadingBar(5000, function() {
+                    showStep(7);
+                    renderResult();
+                });
+                return;
+            }
 
-  function startQuiz(answer) {
-    quizAnswers['q1'] = answer;
-    showOverlay();
-    updateProgress(1);
-    showStep(0);
-  }
+            var next = fromStep + 1;
+            updateProgress(next);
+            showStep(next);
+        }
 
-  function showOverlay() {
-    document.getElementById('quizOverlay').classList.add('active');
-    document.body.style.overflow = 'hidden';
-    window.scrollTo(0, 0);
-  }
+        // ─── LOADING BAR ───
+        var barInterval = null;
+        function startLoadingBar(duration, callback) {
+            var fill = document.getElementById('loadingBarFill');
+            var pct  = document.getElementById('loadingBarPct');
+            if (!fill || !pct) { callback(); return; }
+            // Reset
+            fill.style.transition = 'none';
+            fill.style.width = '0%';
+            pct.textContent = '0%';
+            if (barInterval) clearInterval(barInterval);
 
-  function showStep(n) {
-    for (var i = 0; i < 4; i++) {
-      var el = document.getElementById('qoStep' + i);
-      if (el) el.classList.remove('active');
-    }
-    var target = document.getElementById('qoStep' + n);
-    if (target) target.classList.add('active');
-    var overlay = document.getElementById('quizOverlay');
-    if (overlay) overlay.scrollTop = 0;
-    var labels = ['Question 2 of 3', 'Question 3 of 3', 'Almost Done!', ''];
-    var labelEl = document.getElementById('qoProgressLabel');
-    if (labelEl) labelEl.textContent = labels[n] || '';
-  }
+            var steps     = 60;
+            var interval  = duration / steps;
+            var current   = 0;
+            // Ease-in-out curve: slow start, fast middle, slow end
+            barInterval = setInterval(function() {
+                current++;
+                var t = current / steps;
+                // ease in-out cubic
+                var eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+                var pctVal = Math.round(eased * 100);
+                fill.style.transition = 'width ' + (interval / 1000).toFixed(2) + 's ease';
+                fill.style.width = pctVal + '%';
+                pct.textContent   = pctVal + '%';
+                if (current >= steps) {
+                    clearInterval(barInterval);
+                    barInterval = null;
+                    fill.style.width = '100%';
+                    pct.textContent  = '100%';
+                    setTimeout(callback, 300);
+                }
+            }, interval);
+        }
 
-  function updateProgress(completedSteps) {
-    for (var i = 0; i < 3; i++) {
-      var p = document.getElementById('prog' + i);
-      if (p) p.classList.toggle('done', i < completedSteps);
-    }
-  }
+        function renderResult() {
+            var sq = calcData.sqft || 300;
+            var om = calcData.ownMult   || 1.0;
+            var pm = calcData.propMult  || 1.0;
+            var lm = calcData.locMult   || 1.0;
+            var dm = calcData.durMult   || 1.0;
+            var wm = calcData.waterMult || 1.0;
 
-  function nextStep(fromStep, answer) {
-    quizAnswers['q' + (fromStep + 2)] = answer;
-    updateProgress(fromStep + 2);
-    showStep(fromStep + 1);
-  }
+            var combined = om * pm * lm * dm * wm;
 
-  function goToCall() {
-    var zip = document.getElementById('zipInput').value.trim();
-    if (zip.length < 5) {
-      document.getElementById('zipInput').focus();
-      document.getElementById('zipInput').style.borderColor = '#e74c3c';
-      return;
-    }
-    quizAnswers['zip'] = zip;
-    updateProgress(3);
-    showStep(3);
-  }
+            var baseLow  = 15;
+            var baseHigh = 30;
 
-  var zipInput = document.getElementById('zipInput');
-  zipInput.addEventListener('input', function() {
-    this.style.borderColor = this.value.length === 5 ? '#2ECC71' : '#dde2ea';
-  });
-  zipInput.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') goToCall();
-  });
+            var rawLow  = sq * baseLow  * combined;
+            var rawHigh = sq * baseHigh * combined;
 
-  function openModal(id) {
-    document.getElementById(id).classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeModal(id) {
-    document.getElementById(id).classList.remove('active');
-    if (!document.getElementById('quizOverlay').classList.contains('active')) {
-      document.body.style.overflow = '';
-    }
-  }
-  function closeModalOnBackdrop(event, id) {
-    if (event.target.id === id) closeModal(id);
-  }
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      ['privacyModal','termsModal','disclaimerModal'].forEach(closeModal);
-    }
-  });
-</script>
+            var low  = rawLow * 0.25;
+            var high = rawHigh;
+
+            low  = Math.round(low  / 50) * 50;
+            high = Math.round(high / 50) * 50;
+
+            if (low < 100) low = 100;
+            if (high < low + 100) high = low + 100;
+
+            document.getElementById('resultLow').textContent  = low.toLocaleString();
+            document.getElementById('resultHigh').textContent = high.toLocaleString();
+
+            var ownLabels  = { 'own': 'Own', 'rent': 'Rent' };
+            var propLabels = { 'single': 'Single-family', 'condo': 'Condo/Apartment', 'townhouse': 'Townhouse', 'mobile': 'Mobile/Manufactured' };
+            var areaLabels = { 'under50': 'Under 50 sq ft', '50to150': '50–150 sq ft', '150to300': '150–300 sq ft', '300to500': '300–500 sq ft', 'over500': 'Over 500 sq ft', 'notsure': 'Not sure (est. 300 sq ft)' };
+            var locLabels  = { 'bathroom': 'Bathroom', 'kitchen': 'Kitchen', 'basement': 'Basement', 'attic': 'Attic', 'multiple': 'Multiple rooms', 'behindwalls': 'Behind walls' };
+            var durLabels  = { 'under1wk': 'Less than 1 week', '1to4wk': '1–4 weeks', '1to3mo': '1–3 months', 'over3mo': 'Over 3 months' };
+            var waterLabels = { 'no_water': 'No water damage', 'minor_water': 'Minor water damage', 'active_water': 'Active / ongoing leak', 'flood_water': 'Flooding / major damage' };
+
+            document.getElementById('brOwn').textContent   = ownLabels[calcData.ownType]       || '—';
+            document.getElementById('brProp').textContent  = propLabels[calcData.propType]     || '—';
+            document.getElementById('brArea').textContent  = areaLabels[calcData.sqftLabel]    || '—';
+            document.getElementById('brLoc').textContent   = locLabels[calcData.location]      || '—';
+            document.getElementById('brDur').textContent   = durLabels[calcData.duration]      || '—';
+            document.getElementById('brWater').textContent = waterLabels[calcData.waterDamage] || '—';
+            document.getElementById('brRange').textContent = '$' + low.toLocaleString() + ' – $' + high.toLocaleString();
+        }
+
+        // ─── MODALS ───
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+            if (!document.getElementById('quizOverlay').classList.contains('active')) {
+                document.body.style.overflow = '';
+            }
+        }
+
+        function closeModalOnBackdrop(event, id) {
+            if (event.target.id === id) closeModal(id);
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                ['privacyModal', 'termsModal', 'disclaimerModal'].forEach(closeModal);
+            }
+        });
+    </script>
+
 </body>
 </html>
