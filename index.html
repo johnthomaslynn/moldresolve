@@ -1,6 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JBPWL5TNN5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JBPWL5TNN5');
+</script>
+
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "x40x7tpaho");
+</script>
+
+
+
+
+
+
+
+
+
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mold Removal Calculator — Free Quote</title>
@@ -282,8 +311,6 @@
             margin-bottom: 0;
         }
         .calc-card .first-options .qo-opt {
-            background: var(--blue-50);
-            color: var(--text);
             border: 1.5px solid var(--border);
             border-radius: var(--radius-sm);
             padding: 14px 18px;
@@ -300,8 +327,6 @@
             justify-content: center;
         }
         .calc-card .first-options .qo-opt:hover {
-            background: var(--blue-100);
-            border-color: var(--blue);
             transform: translateY(-1px);
         }
         .calc-card .first-options .qo-opt:active {
@@ -310,6 +335,29 @@
         .calc-card .first-options .qo-opt .qo-emoji {
             font-size: 20px;
         }
+
+        /* ── own button (green) ── */
+        .btn-own {
+            background: var(--success) !important;
+            color: #fff !important;
+            border-color: var(--success) !important;
+        }
+        .btn-own:hover {
+            background: #146d47 !important;
+            border-color: #146d47 !important;
+        }
+
+        /* ── rent button (light red) ── */
+        .btn-rent {
+            background: #ffe5e5 !important;
+            color: #b30000 !important;
+            border-color: #ff9999 !important;
+        }
+        .btn-rent:hover {
+            background: #ffd6d6 !important;
+            border-color: #ff6666 !important;
+        }
+
         /* no footer at all */
 
         /* ── overlay quiz ── */
@@ -492,7 +540,7 @@
             flex-shrink: 0;
         }
 
-        /* ── RESULT STEP ── */
+        /* ── RESULT STEP (updated) ── */
         .result-wrap {
             text-align: center;
             padding-top: 2px;
@@ -525,12 +573,7 @@
             line-height: 1.2;
             margin-bottom: 4px;
         }
-        .result-sub {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-bottom: 14px;
-            line-height: 1.5;
-        }
+
         .result-price-box {
             background: var(--blue-50);
             border: 1.5px solid var(--border);
@@ -538,13 +581,13 @@
             padding: 18px 18px 16px;
             margin-bottom: 16px;
         }
-        .result-price-box .price-label {
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+        .result-price-box .range-label {
+            font-size: 13px;
+            font-weight: 600;
             color: var(--navy);
-            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 2px;
         }
         .result-price-box .price-range {
             font-size: clamp(28px, 6vw, 36px);
@@ -555,15 +598,7 @@
         .result-price-box .price-range .dollar {
             color: var(--blue);
         }
-        .result-price-box .price-note {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 4px;
-            line-height: 1.5;
-        }
-        .result-price-box .price-note strong {
-            color: var(--text);
-        }
+
         .result-breakdown {
             text-align: left;
             font-size: 12px;
@@ -587,6 +622,33 @@
         .result-breakdown .br-row:last-child {
             border-bottom: none;
         }
+
+        /* ── emphasized call-to-action text ── */
+        .call-cta {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.6;
+            margin-bottom: 18px;
+            padding: 0 4px;
+        }
+        .call-cta .highlight {
+            font-weight: 800;
+            color: var(--blue);
+            background: var(--blue-50);
+            padding: 2px 8px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+        .call-cta .highlight-self {
+            font-weight: 800;
+            color: var(--success);
+            background: #edf7f3;
+            padding: 2px 8px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
         .call-btn-green {
             display: flex;
             align-items: center;
@@ -620,23 +682,6 @@
             50% {
                 box-shadow: 0 0 0 12px rgba(26, 128, 85, 0.08);
             }
-        }
-        .call-reassure {
-            font-size: 12px;
-            color: var(--text-faint);
-            text-align: center;
-            line-height: 1.5;
-        }
-        .call-reassure strong {
-            color: var(--text-muted);
-        }
-        .result-phone {
-            font-size: 20px;
-            font-weight: 900;
-            color: var(--phone);
-            letter-spacing: 0.5px;
-            display: block;
-            margin-bottom: 2px;
         }
 
         /* ── footer (minimized) ── */
@@ -783,6 +828,9 @@
                 font-size: 15px;
                 padding: 12px 16px;
             }
+            .call-cta {
+                font-size: 15px;
+            }
         }
         @media (max-width: 400px) {
             .qo-inner {
@@ -803,6 +851,9 @@
             }
             .loading-wrap .loading-text {
                 font-size: 16px;
+            }
+            .call-cta {
+                font-size: 14px;
             }
         }
     </style>
@@ -831,20 +882,20 @@
     <section class="hero">
         <div class="container">
             <div class="eyebrow"><span class="calc-icon">🧮</span> Mold Removal Calculator</div>
-            <h1>Get Your <em>Instant Estimate</em> — Free</h1>
+            <h1>Get Your <em>Instant Mold Estimate</em></h1>
             <p class="sub">Answer 5 quick questions. Get a realistic price range. Then speak with a licensed specialist.</p>
         </div>
     </section>
 
-    <!-- ─── CALCULATOR CARD (clean, no footer) ─── -->
+    <!-- ─── CALCULATOR CARD ─── -->
     <section class="calc-section">
         <div class="calc-card">
             <div class="calc-icon-big">🏠</div>
             <div class="calc-label">Free Mold Removal Quote</div>
             <div class="calc-title">Do you own or rent the property?</div>
             <div class="first-options">
-                <button class="qo-opt" onclick="openQuizFromCard('own', 1.0)"><span class="qo-emoji">🏠</span> I own it</button>
-                <button class="qo-opt" onclick="openQuizFromCard('rent', 0.85)"><span class="qo-emoji">🔑</span> I rent it</button>
+                <button class="qo-opt btn-own" onclick="openQuizFromCard('own', 1.0)"><span class="qo-emoji">🏠</span> I own it</button>
+                <button class="qo-opt btn-rent" onclick="openQuizFromCard('rent', 0.85)"><span class="qo-emoji">🔑</span> I rent it</button>
             </div>
         </div>
     </section>
@@ -857,8 +908,8 @@
             </div>
             <div class="qo-progress-label" id="qoProgressLabel">Question 1 of 5</div>
 
-            <!-- Step 0: own/rent — Q1 of 5 -->
-            <div class="qo-step active" id="qoStep0">
+            <!-- Step 0: own/rent -->
+            <div class="qo-step" id="qoStep0">
                 <div class="qo-icon">🏠</div>
                 <div class="qo-label">Question 1 of 5</div>
                 <div class="qo-question">Do you own or rent the property?</div>
@@ -869,7 +920,7 @@
             </div>
 
             <!-- Step 1: property type -->
-            <div class="qo-step" id="qoStep1">
+            <div class="qo-step active" id="qoStep1">
                 <div class="qo-icon">🏘️</div>
                 <div class="qo-label">Question 1 of 5</div>
                 <div class="qo-question">What type of property is it?</div>
@@ -881,7 +932,7 @@
                 </div>
             </div>
 
-            <!-- Step 2: square footage with "Not sure" -->
+            <!-- Step 2: sqft -->
             <div class="qo-step" id="qoStep2">
                 <div class="qo-icon">📐</div>
                 <div class="qo-label">Question 2 of 5</div>
@@ -911,7 +962,7 @@
                 </div>
             </div>
 
-            <!-- Step 4: duration — Q4 of 5 -->
+            <!-- Step 4: duration -->
             <div class="qo-step" id="qoStep4">
                 <div class="qo-icon">⏳</div>
                 <div class="qo-label">Question 4 of 5</div>
@@ -924,7 +975,7 @@
                 </div>
             </div>
 
-            <!-- Step 5: water damage — Q5 of 5 -->
+            <!-- Step 5: water damage -->
             <div class="qo-step" id="qoStep5">
                 <div class="qo-icon">💧</div>
                 <div class="qo-label">Question 5 of 5</div>
@@ -950,17 +1001,15 @@
                 </div>
             </div>
 
-            <!-- Step 7: RESULT -->
+            <!-- Step 7: RESULT (updated) -->
             <div class="qo-step" id="qoStep7">
                 <div class="result-wrap">
                     <div class="result-badge">Your Custom Estimate</div>
                     <div class="result-headline">Here's What Mold Remediation <br>Typically Costs in Your Situation</div>
-                    <div class="result-sub">Based on your answers and current market rates.</div>
 
                     <div class="result-price-box">
-                        <div class="price-label">📊 Estimated Remediation Range</div>
+                        <div class="range-label">Most likely range</div>
                         <div class="price-range"><span class="dollar">$</span><span id="resultLow">0</span> – <span class="dollar">$</span><span id="resultHigh">0</span></div>
-                        <div class="price-note"><strong>Final price depends on inspection</strong> — your <strong>free</strong> call with a licensed specialist will confirm the exact number.</div>
                     </div>
 
                     <div class="result-breakdown" id="resultBreakdown">
@@ -973,25 +1022,15 @@
                         <div class="br-row" style="border-top:2px solid var(--border);padding-top:6px;margin-top:4px;font-weight:700;"><span>🧮 Calculated range</span> <strong id="brRange">—</strong></div>
                     </div>
 
-                    <div class="call-sub" style="font-size:14px;color:var(--text-muted);margin-bottom:14px;line-height:1.55;">
-                        <strong>This estimate is based on real market data.</strong> To get your <strong>exact, no-obligation quote</strong>, speak with a licensed specialist now.
+                    <!-- Emphasized CTA text -->
+                    <div class="call-cta">
+                        A licensed specialist will tell you if your actual cost is higher, lower — 
+                        <span class="highlight-self">or whether you can handle part of this yourself.</span>
                     </div>
 
                     <a href="tel:+18332464467" class="call-btn-green">
                         📞 Call Now — <span class="result-phone" style="display:inline;font-size:inherit;color:inherit;">1-833-246-4467</span>
                     </a>
-
-                    <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;">
-                        <span style="font-size:11px;font-weight:700;color:var(--text-faint);letter-spacing:0.5px;text-transform:uppercase;">⭐ 24/7 Hotline</span>
-                        <span style="width:4px;height:4px;border-radius:50%;background:var(--text-faint);"></span>
-                        <span style="font-size:11px;font-weight:700;color:var(--text-faint);letter-spacing:0.5px;text-transform:uppercase;">📋 Licensed specialists</span>
-                        <span style="width:4px;height:4px;border-radius:50%;background:var(--text-faint);"></span>
-                        <span style="font-size:11px;font-weight:700;color:var(--text-faint);letter-spacing:0.5px;text-transform:uppercase;">🔒 No obligation</span>
-                    </div>
-
-                    <div class="call-reassure">
-                        <strong>No work begins without your written approval.</strong> The call takes 2–3 minutes and connects you with a <strong>local, licensed</strong> mold specialist who will give you honest answers and a firm price.
-                    </div>
                 </div>
             </div>
         </div>
@@ -1091,7 +1130,6 @@
             answers: {}
         };
 
-        // Steps 0–5 = questions, 6 = loading, 7 = result
         var stepLabels = [
             'Question 1 of 5',
             'Question 1 of 5',
@@ -1103,8 +1141,6 @@
             'Your Estimate'
         ];
 
-        // ─── Open quiz at step 1 (Q1 of 5) from the on-page card ───
-        // Captures own/rent from the landing card, then opens at Q1
         function openQuizFromCard(value, num) {
             calcData.ownType = value;
             calcData.ownMult = num;
@@ -1170,10 +1206,9 @@
                     break;
             }
 
-            // After Q5 (fromStep === 5), go to loading (step 6)
             if (fromStep === 5) {
-                updateProgress(5); // all 5 dots filled
-                showStep(6);       // loading screen
+                updateProgress(5);
+                showStep(6);
                 startLoadingBar(5000, function() {
                     showStep(7);
                     renderResult();
@@ -1186,13 +1221,11 @@
             showStep(next);
         }
 
-        // ─── LOADING BAR ───
         var barInterval = null;
         function startLoadingBar(duration, callback) {
             var fill = document.getElementById('loadingBarFill');
             var pct  = document.getElementById('loadingBarPct');
             if (!fill || !pct) { callback(); return; }
-            // Reset
             fill.style.transition = 'none';
             fill.style.width = '0%';
             pct.textContent = '0%';
@@ -1201,11 +1234,9 @@
             var steps     = 60;
             var interval  = duration / steps;
             var current   = 0;
-            // Ease-in-out curve: slow start, fast middle, slow end
             barInterval = setInterval(function() {
                 current++;
                 var t = current / steps;
-                // ease in-out cubic
                 var eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
                 var pctVal = Math.round(eased * 100);
                 fill.style.transition = 'width ' + (interval / 1000).toFixed(2) + 's ease';
@@ -1230,20 +1261,17 @@
             var wm = calcData.waterMult || 1.0;
 
             var combined = om * pm * lm * dm * wm;
-
             var baseLow  = 15;
-            var baseHigh = 30;
+            var rawLow   = sq * baseLow * combined;
 
-            var rawLow  = sq * baseLow  * combined;
-            var rawHigh = sq * baseHigh * combined;
+            // low = 25% of rawLow, then min $400
+            var low = rawLow * 0.25;
+            low = Math.round(low / 50) * 50;
+            if (low < 400) low = 400;
 
-            var low  = rawLow * 0.25;
-            var high = rawHigh;
-
-            low  = Math.round(low  / 50) * 50;
+            // high = low * 2.0
+            var high = low * 2.0;
             high = Math.round(high / 50) * 50;
-
-            if (low < 100) low = 100;
             if (high < low + 100) high = low + 100;
 
             document.getElementById('resultLow').textContent  = low.toLocaleString();
